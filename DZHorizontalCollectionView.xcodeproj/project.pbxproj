@@ -14,6 +14,11 @@
 		BF029E6A1EFBC2CA0081B378 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF029E681EFBC2CA0081B378 /* LaunchScreen.storyboard */; };
 		BF029E741EFBC3B60081B378 /* DZHorizontalCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF029E731EFBC3B60081B378 /* DZHorizontalCollectionView.m */; };
 		BF029E771EFBC9820081B378 /* DZModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF029E761EFBC9820081B378 /* DZModel.m */; };
+		BF029E7A1EFCB4720081B378 /* DZCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF029E791EFCB4720081B378 /* DZCollectionViewCell.m */; };
+		BF029E7D1EFCE3DF0081B378 /* DZHorizontalCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF029E7C1EFCE3DF0081B378 /* DZHorizontalCollectionViewCell.m */; };
+		BF029E801EFCF0240081B378 /* DZAdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF029E7F1EFCF0240081B378 /* DZAdViewCell.m */; };
+		BF029E831EFCF0720081B378 /* DZAdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF029E821EFCF0720081B378 /* DZAdModel.m */; };
+		BF029E861EFD02180081B378 /* DZHorizontalCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BF029E851EFD02180081B378 /* DZHorizontalCollectionViewFlowLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +35,16 @@
 		BF029E731EFBC3B60081B378 /* DZHorizontalCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZHorizontalCollectionView.m; sourceTree = "<group>"; };
 		BF029E751EFBC9820081B378 /* DZModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZModel.h; sourceTree = "<group>"; };
 		BF029E761EFBC9820081B378 /* DZModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZModel.m; sourceTree = "<group>"; };
+		BF029E781EFCB4720081B378 /* DZCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZCollectionViewCell.h; sourceTree = "<group>"; };
+		BF029E791EFCB4720081B378 /* DZCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZCollectionViewCell.m; sourceTree = "<group>"; };
+		BF029E7B1EFCE3DF0081B378 /* DZHorizontalCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZHorizontalCollectionViewCell.h; sourceTree = "<group>"; };
+		BF029E7C1EFCE3DF0081B378 /* DZHorizontalCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZHorizontalCollectionViewCell.m; sourceTree = "<group>"; };
+		BF029E7E1EFCF0240081B378 /* DZAdViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZAdViewCell.h; sourceTree = "<group>"; };
+		BF029E7F1EFCF0240081B378 /* DZAdViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZAdViewCell.m; sourceTree = "<group>"; };
+		BF029E811EFCF0720081B378 /* DZAdModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZAdModel.h; sourceTree = "<group>"; };
+		BF029E821EFCF0720081B378 /* DZAdModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZAdModel.m; sourceTree = "<group>"; };
+		BF029E841EFD02180081B378 /* DZHorizontalCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZHorizontalCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		BF029E851EFD02180081B378 /* DZHorizontalCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZHorizontalCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +84,12 @@
 				BF029E611EFBC2CA0081B378 /* ViewController.m */,
 				BF029E751EFBC9820081B378 /* DZModel.h */,
 				BF029E761EFBC9820081B378 /* DZModel.m */,
+				BF029E811EFCF0720081B378 /* DZAdModel.h */,
+				BF029E821EFCF0720081B378 /* DZAdModel.m */,
+				BF029E781EFCB4720081B378 /* DZCollectionViewCell.h */,
+				BF029E791EFCB4720081B378 /* DZCollectionViewCell.m */,
+				BF029E7E1EFCF0240081B378 /* DZAdViewCell.h */,
+				BF029E7F1EFCF0240081B378 /* DZAdViewCell.m */,
 				BF029E661EFBC2CA0081B378 /* Assets.xcassets */,
 				BF029E681EFBC2CA0081B378 /* LaunchScreen.storyboard */,
 				BF029E6B1EFBC2CA0081B378 /* Info.plist */,
@@ -90,6 +111,10 @@
 			children = (
 				BF029E721EFBC3B60081B378 /* DZHorizontalCollectionView.h */,
 				BF029E731EFBC3B60081B378 /* DZHorizontalCollectionView.m */,
+				BF029E841EFD02180081B378 /* DZHorizontalCollectionViewFlowLayout.h */,
+				BF029E851EFD02180081B378 /* DZHorizontalCollectionViewFlowLayout.m */,
+				BF029E7B1EFCE3DF0081B378 /* DZHorizontalCollectionViewCell.h */,
+				BF029E7C1EFCE3DF0081B378 /* DZHorizontalCollectionViewCell.m */,
 			);
 			path = DZHorizontalCollectionView;
 			sourceTree = "<group>";
@@ -167,9 +192,14 @@
 			files = (
 				BF029E621EFBC2CA0081B378 /* ViewController.m in Sources */,
 				BF029E771EFBC9820081B378 /* DZModel.m in Sources */,
+				BF029E7A1EFCB4720081B378 /* DZCollectionViewCell.m in Sources */,
 				BF029E5F1EFBC2CA0081B378 /* AppDelegate.m in Sources */,
 				BF029E741EFBC3B60081B378 /* DZHorizontalCollectionView.m in Sources */,
 				BF029E5C1EFBC2CA0081B378 /* main.m in Sources */,
+				BF029E7D1EFCE3DF0081B378 /* DZHorizontalCollectionViewCell.m in Sources */,
+				BF029E801EFCF0240081B378 /* DZAdViewCell.m in Sources */,
+				BF029E861EFD02180081B378 /* DZHorizontalCollectionViewFlowLayout.m in Sources */,
+				BF029E831EFCF0720081B378 /* DZAdModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

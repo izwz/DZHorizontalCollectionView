@@ -10,4 +10,13 @@
 
 @interface DZHorizontalCollectionView : UIView
 
+@property (nonatomic,assign) CGFloat    margin;     /**< 左右边缘大小 */
+@property (nonatomic,assign) CGFloat    spacing;    /**< cell间隔大小 */
+
+@property (nonatomic,assign) CGFloat    itemWidth;  /**< cell间隔大小 */
+
+- (instancetype)initWithFrame:(CGRect)frame customCell:(Class)cell;
+
+- (void)reloadData:(NSArray *)data;
+
 @end

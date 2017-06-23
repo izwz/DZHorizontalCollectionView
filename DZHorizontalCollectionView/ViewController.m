@@ -9,16 +9,19 @@
 #import "ViewController.h"
 #import "DZHorizontalCollectionView.h"
 #import "DZModel.h"
+#import "DZCollectionViewCell.h"
+#import "DZAdViewCell.h"
+#import "DZAdModel.h"
 
-static NSString * const cellIndentifier = @"cellIndentifier";
-
-@interface ViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
-
-@property (nonatomic,strong) UICollectionView *collectionView;
-
-@property (nonatomic,strong) UICollectionViewFlowLayout *flowLayout;
+@interface ViewController ()
 
 @property (nonatomic,strong) NSMutableArray *models;
+
+@property (nonatomic,strong) DZHorizontalCollectionView *dzCollectionView;
+
+@property (nonatomic,strong) NSMutableArray *carModels;
+
+@property (nonatomic,strong) DZHorizontalCollectionView *dzADView;
 
 @end
 
@@ -26,63 +29,51 @@ static NSString * const cellIndentifier = @"cellIndentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     self.view.backgroundColor = [UIColor whiteColor];
-    
-//    UICollectionView
     _models = [NSMutableArray array];
+    _carModels = [NSMutableArray array];
     
-    for (NSInteger i = 0 ; i < 15; i ++) {
+    for (NSInteger i = 0 ; i < 8; i ++) {
         DZModel *model = [[DZModel alloc] init];
         model.age = i;
         model.name = [NSString stringWithFormat:@"name_%ld",(long)i];
-        
         [_models addObject:model];
     }
-    [self.view addSubview:self.collectionView];
-}
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _models.count;
-}
-
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell       = [collectionView dequeueReusableCellWithReuseIdentifier:cellIndentifier forIndexPath:indexPath];
     
+    for (NSInteger i = 0; i < 8; i ++) {
+        DZAdModel *adModel = [[DZAdModel alloc] init];
+        adModel.carName = [NSString stringWithFormat:@"CarName_%ld",(long)i];
+        [_carModels addObject:adModel];
+    }
     
+    [self.view addSubview:self.dzCollectionView];
+    [self.dzCollectionView reloadData:self.models];
     
-    cell.contentView.backgroundColor = indexPath.row % 2 == 0 ? [UIColor blackColor] : [UIColor whiteColor];
-    
-    return cell;
+    [self.view addSubview:self.dzADView];
+    [self.dzADView reloadData:self.carModels];
 }
 
 #pragma mark - lazy laod
 
-- (UICollectionView *)collectionView {
-    if (!_collectionView) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 50, [UIScreen mainScreen].bounds.size.width, 150) collectionViewLayout:self.flowLayout];
-        _collectionView.backgroundColor = [UIColor whiteColor];
-        _collectionView.delegate = self;
-        _collectionView.dataSource = self;
-        _collectionView.pagingEnabled = YES;
-//        _collectionView.bounces = YES;
-//        _collectionView.alwaysBounceHorizontal = YES;
-//        _collectionView.alwaysBounceVertical = YES;
-        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellIndentifier];
+- (DZHorizontalCollectionView *)dzCollectionView {
+    if (!_dzCollectionView) {
+        _dzCollectionView = [[DZHorizontalCollectionView alloc] initWithFrame:CGRectMake(0, 50, [UIScreen mainScreen].bounds.size.width, 200) customCell:[DZCollectionViewCell class]];
+        _dzCollectionView.margin = 10;
+        _dzCollectionView.spacing = 20;
     }
-    return _collectionView;
+    return _dzCollectionView;
 }
 
-- (UICollectionViewFlowLayout *)flowLayout {
-    if (!_flowLayout) {
-        _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        _flowLayout.minimumLineSpacing = 0.0;
-        _flowLayout.itemSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 150);
-        _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+- (DZHorizontalCollectionView *)dzADView {
+    if (!_dzADView) {
+        _dzADView = [[DZHorizontalCollectionView alloc] initWithFrame:CGRectMake(0, 300, [UIScreen mainScreen].bounds.size.width, 200) customCell:[DZAdViewCell class]];
+        CGFloat width = 100;
+        _dzADView.itemWidth = width;
+        _dzADView.margin = ([UIScreen mainScreen].bounds.size.width - width) / 2;
+        _dzADView.spacing = 10;
+        
     }
-    return _flowLayout;
+    return _dzADView;
 }
 
 #pragma mark -
