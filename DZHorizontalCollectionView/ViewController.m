@@ -58,8 +58,9 @@
 - (DZHorizontalCollectionView *)dzCollectionView {
     if (!_dzCollectionView) {
         _dzCollectionView = [[DZHorizontalCollectionView alloc] initWithFrame:CGRectMake(0, 50, [UIScreen mainScreen].bounds.size.width, 200) customCell:[DZCollectionViewCell class]];
-        _dzCollectionView.margin = 10;
-        _dzCollectionView.spacing = 20;
+        _dzCollectionView.margin = 0;
+        _dzCollectionView.infinite = YES;
+        _dzCollectionView.spacing = 0;
     }
     return _dzCollectionView;
 }
@@ -67,10 +68,12 @@
 - (DZHorizontalCollectionView *)dzADView {
     if (!_dzADView) {
         _dzADView = [[DZHorizontalCollectionView alloc] initWithFrame:CGRectMake(0, 300, [UIScreen mainScreen].bounds.size.width, 200) customCell:[DZAdViewCell class]];
-        CGFloat width = 100;
-        _dzADView.itemWidth = width;
-        _dzADView.margin = ([UIScreen mainScreen].bounds.size.width - width) / 2;
-        _dzADView.spacing = 10;
+        CGFloat margin = 40;
+        _dzADView.style = DZHorizontalCollectionViewStyleCoverflow;
+        _dzADView.infinite = YES;
+        _dzADView.itemWidth = [UIScreen mainScreen].bounds.size.width - margin * 2;
+        _dzADView.margin = margin;
+        _dzADView.spacing = 0;
         
     }
     return _dzADView;

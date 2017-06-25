@@ -7,6 +7,7 @@
 //
 
 #import "DZHorizontalCollectionViewFlowLayout.h"
+#import "DZHorizontalCollectionView.h"
 
 @implementation DZHorizontalCollectionViewFlowLayout
 
@@ -28,30 +29,36 @@
 
 //实现大小变化的动画效果
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
+    DZHorizontalCollectionView *dzCollectionView = (DZHorizontalCollectionView *)self.collectionView.superview;
     NSArray *originArray = [super layoutAttributesForElementsInRect:rect];
-    NSArray *array = [[NSArray alloc] initWithArray:originArray copyItems:YES];
-    //可视rect
-    CGRect visibleRect;
-    visibleRect.origin = self.collectionView.contentOffset;
-    visibleRect.size = self.collectionView.bounds.size;
-    
-    for (UICollectionViewLayoutAttributes *attribute in array) {
-        CGFloat activeDistance = 30; //激活距离，简单理解就是在这个移动距离内，不会有大小变化，必须超过这个距离才变化
-        CGFloat distance = CGRectGetMidX(visibleRect) - attribute.center.x;
-        if (ABS(distance) > activeDistance ) {
-            CGFloat halfWidth = self.collectionView.bounds.size.width / 2;
-            CGFloat minScale = 0.7;
-            CGFloat deltaScale = 1 - minScale;
-            CGFloat targetScale = 1 - deltaScale * ((ABS(distance) - activeDistance) / (halfWidth - activeDistance));
-            attribute.transform = CGAffineTransformMakeScale(targetScale, targetScale);
-        }else{
-            NSLog(@"<<<<<");
+    if (dzCollectionView.style == DZHorizontalCollectionViewStyleDefault) {
+        return originArray;
+    }else if (dzCollectionView.style == DZHorizontalCollectionViewStyleCoverflow){
+        NSArray *array = [[NSArray alloc] initWithArray:originArray copyItems:YES];
+        //可视rect
+        CGRect visibleRect = CGRectZero;
+        visibleRect.origin = self.collectionView.contentOffset;
+        visibleRect.size = self.collectionView.bounds.size;
+        
+        for (UICollectionViewLayoutAttributes *attribute in array) {
+            CGFloat activeDistance = 30; //激活距离，简单理解就是在这个移动距离内，不会有大小变化，必须超过这个距离才变化
+            CGFloat distance = CGRectGetMidX(visibleRect) - attribute.center.x;
+            if (ABS(distance) > activeDistance ) {
+                CGFloat halfWidth = self.collectionView.bounds.size.width / 2;
+                CGFloat minScale = 0.95;
+                CGFloat deltaScale = 1 - minScale;
+                CGFloat targetScale = 1 - deltaScale * ((ABS(distance) - activeDistance) / (halfWidth - activeDistance));
+                attribute.transform = CGAffineTransformMakeScale(targetScale, targetScale);
+                NSLog(@"++++++++++++++++++++++++++++");
+            }else{
+                NSLog(@"<<<<<<<<<<<<<<<<<<");
+            }
+            //        NSLog(@"%f",attributes.transform.a);
         }
-//        NSLog(@"%f",attributes.transform.a);
+        NSLog(@"------------------------");
+        return array;
     }
-    NSLog(@"------------------------");
-    
-    return array;
+    return originArray;
 }
 
 //用来实现滑动后自动让cell停在中间
@@ -72,8 +79,7 @@
             continue;
         }
         
-        if (ABS(attributes.center.x - proposedContentOffsetCenterX) <
-            ABS(candidateAttributes.center.x - proposedContentOffsetCenterX)) {
+        if (ABS(attributes.center.x - proposedContentOffsetCenterX) < ABS(candidateAttributes.center.x - proposedContentOffsetCenterX)) {
             candidateAttributes = attributes;
         }
     }
