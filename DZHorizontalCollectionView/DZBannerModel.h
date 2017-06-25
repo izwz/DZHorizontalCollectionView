@@ -1,5 +1,5 @@
 //
-//  DZModel.h
+//  DZBannerModel.h
 //  DZHorizontalCollectionView
 //
 //  Created by zwz on 2017/6/22.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DZModel : NSObject
+@interface DZBannerModel : NSObject
 
 @property (nonatomic,assign) NSInteger age;
 

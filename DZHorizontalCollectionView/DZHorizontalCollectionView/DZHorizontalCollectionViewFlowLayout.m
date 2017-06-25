@@ -45,17 +45,12 @@
             CGFloat distance = CGRectGetMidX(visibleRect) - attribute.center.x;
             if (ABS(distance) > activeDistance ) {
                 CGFloat halfWidth = self.collectionView.bounds.size.width / 2;
-                CGFloat minScale = 0.95;
+                CGFloat minScale = dzCollectionView.minScale ?: 0.95;
                 CGFloat deltaScale = 1 - minScale;
                 CGFloat targetScale = 1 - deltaScale * ((ABS(distance) - activeDistance) / (halfWidth - activeDistance));
                 attribute.transform = CGAffineTransformMakeScale(targetScale, targetScale);
-                NSLog(@"++++++++++++++++++++++++++++");
-            }else{
-                NSLog(@"<<<<<<<<<<<<<<<<<<");
             }
-            //        NSLog(@"%f",attributes.transform.a);
         }
-        NSLog(@"------------------------");
         return array;
     }
     return originArray;
@@ -69,21 +64,17 @@
     NSArray* attributesArray = [self layoutAttributesForElementsInRect:cvBounds];
     UICollectionViewLayoutAttributes* candidateAttributes;
     for (UICollectionViewLayoutAttributes* attributes in attributesArray) {
-        // == Skip comparison with non-cell items (headers and footers) == //
         if (attributes.representedElementCategory != UICollectionElementCategoryCell) {
             continue;
         }
-        // == First time in the loop == //
         if(!candidateAttributes) {
             candidateAttributes = attributes;
             continue;
         }
-        
         if (ABS(attributes.center.x - proposedContentOffsetCenterX) < ABS(candidateAttributes.center.x - proposedContentOffsetCenterX)) {
             candidateAttributes = attributes;
         }
     }
-    
     return CGPointMake(candidateAttributes.center.x - halfWidth, proposedContentOffset.y);
 }
 

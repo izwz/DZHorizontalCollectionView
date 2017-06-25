@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DZHorizontalCollectionView/DZHorizontalCollectionView/DZHorizontalCollectionView.m"
-            timestampString = "520076441.935964"
+            timestampString = "520090078.306317"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "-collectionView:didSelectItemAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DZHorizontalCollectionView/DZHorizontalCollectionView/DZHorizontalCollectionView.m"
-            timestampString = "520076441.935964"
+            timestampString = "520090078.306317"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "-scrollViewDidEndScrollingAnimation:"
             landmarkType = "7">
          </BreakpointContent>
