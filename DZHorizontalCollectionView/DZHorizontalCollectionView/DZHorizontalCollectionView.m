@@ -12,6 +12,8 @@
 
 static NSString * const cellIndentifier = @"cellIndentifier";
 
+static NSInteger const repeatCount = 1000;//
+
 
 @interface DZHorizontalCollectionView ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -20,8 +22,6 @@ static NSString * const cellIndentifier = @"cellIndentifier";
 @property (nonatomic,strong) DZHorizontalCollectionViewFlowLayout *flowLayout;
 
 @property (nonatomic,strong) NSMutableArray *models;
-
-@property (nonatomic,strong) NSMutableArray *infiniteModels;
 
 @property (nonatomic,strong) UIPageControl *pageControl;
 
@@ -59,22 +59,10 @@ static NSString * const cellIndentifier = @"cellIndentifier";
     [self.models removeAllObjects];
     [self.models addObjectsFromArray:array];
     
-    if (self.isInfinite) {
-        if (!self.infiniteModels) {
-            self.infiniteModels = [NSMutableArray array];
-        }
-        [self.infiniteModels removeAllObjects];
-        [self.infiniteModels addObjectsFromArray:array];
-        [self.infiniteModels addObjectsFromArray:array];
-        [self.infiniteModels addObjectsFromArray:array];
-    }
-    
     [self.collectionView reloadData];
     [self.pageControl setNumberOfPages:array.count];
     
-    if (self.isInfinite) {
-        [self setCurrentIndex:0];
-    }
+    [self setCurrentIndex:0];
 }
 
 - (void)registerViewClass:(Class)viewClass refreshMthod:(SEL)method {
@@ -87,60 +75,62 @@ static NSString * const cellIndentifier = @"cellIndentifier";
 }
 
 - (void)setCurrentIndex:(NSUInteger)currentIndex animated:(BOOL)animated {
+    if (currentIndex > self.models.count - 1 && self.models.count) {
+        currentIndex = currentIndex % self.models.count;
+    }
+    
+    NSIndexPath *currentIndexPath = [self currentIndexPath];
+    NSIndexPath *targetIndexPath;
+    
+    if (!animated && self.isInfinite) {
+        targetIndexPath = [NSIndexPath indexPathForRow:self.models.count * repeatCount / 2 + currentIndex inSection:0];
+    }else{
+        targetIndexPath = [NSIndexPath indexPathForRow:currentIndexPath.row - _currentIndex + currentIndex inSection:0];
+    }
+    [self.collectionView scrollToItemAtIndexPath:targetIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
+    [self setCurrentIndexAndPageControl:currentIndex];
+}
+
+- (void)setCurrentIndexAndPageControl:(NSUInteger)currentIndex{
     if (_currentIndex != currentIndex || currentIndex == 0) {
         _currentIndex = currentIndex;
         self.pageControl.currentPage = currentIndex;
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:currentIndex inSection:0];
-        [self selectIndexPath:indexPath animated:animated];
         if ([self.delegate respondsToSelector:@selector(dzCollectionView:didSelectItemAtIndex:)]) {
             [self.delegate dzCollectionView:self didSelectItemAtIndex:currentIndex];
         }
     }
 }
 
-- (void)selectIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated {
-    if (indexPath.row < self.models.count || indexPath.row > self.models.count * 2 - 1) {
-        [self transferIndexPath:indexPath];
-    }else{
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
-    }
-}
-
-- (void)transferIndexPath:(NSIndexPath *)indexPath {
-    //ABCD
-    //ABCD ABCD ABCD
-    if (self.isInfinite) {
-        // 0 ~ self.models.count - 1
-        // self.models.count ~ self.models.count * 2 - 1
-        // self.models.count * 2 ~ self.models.count * 3 - 1
-        NSIndexPath *targetPath;
-        if (indexPath.row >= 0 && indexPath.row <= self.models.count - 1) {
-            targetPath = [NSIndexPath indexPathForRow:indexPath.row + self.models.count inSection:0];
-        }else if (indexPath.row >= self.models.count * 2 && indexPath.row <= self.models.count * 3 - 1){
-            targetPath = [NSIndexPath indexPathForRow:indexPath.row - self.models.count inSection:0];
-        }else{
-            targetPath = indexPath;
-        }
-        [self.collectionView scrollToItemAtIndexPath:targetPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-    }
-}
-
-- (void)scrollViewDidStop:(UIScrollView *)scrollView {
+- (NSIndexPath *)currentIndexPath{
     NSArray *indexPaths = [self.collectionView indexPathsForVisibleItems];
     NSIndexPath *currentIndexPath;
     CGRect visibleRect = CGRectZero;
     visibleRect.origin = self.collectionView.contentOffset;
     visibleRect.size = self.collectionView.bounds.size;
+    CGPoint centerPoint = CGPointMake(self.collectionView.bounds.size.width / 2 , self.collectionView.bounds.size.height / 2);
     for (NSIndexPath *indexPath in indexPaths) {
         UICollectionViewCell *cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
-        if (CGRectContainsRect(visibleRect, cell.frame)) {
+        CGRect cellFrameToCollectionView = cell.frame;
+        cellFrameToCollectionView.origin.x = cell.frame.origin.x - self.collectionView.contentOffset.x;
+        cellFrameToCollectionView.origin.y = cell.frame.origin.y - self.collectionView.contentOffset.y;
+        if (CGRectContainsRect(visibleRect, cell.frame) && CGRectContainsPoint(cellFrameToCollectionView, centerPoint)) {
             currentIndexPath = indexPath;
             break;
         }
     }
-    id currentModel = self.isInfinite ? self.infiniteModels[currentIndexPath.row] : self.models[currentIndexPath.row];
-    NSInteger realIndex = [self.models indexOfObject:currentModel];
-    [self setCurrentIndex:realIndex animated:NO];
+    return currentIndexPath;
+}
+
+- (void)scrollViewDidStop:(UIScrollView *)scrollView {
+    NSIndexPath *currentIndexPath = [self currentIndexPath];
+    NSInteger realIndex = 0;
+    if (self.models.count) {
+        realIndex = currentIndexPath.row % self.models.count;
+    }
+    [self setCurrentIndexAndPageControl:realIndex];
+    if (self.isInfinite && (currentIndexPath.row == 0 || currentIndexPath.row == self.models.count * repeatCount  - 1 )) {
+        [self setCurrentIndex:realIndex];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -150,13 +140,17 @@ static NSString * const cellIndentifier = @"cellIndentifier";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.isInfinite ? self.infiniteModels.count : self.models.count;
+    return self.isInfinite ? self.models.count * repeatCount : self.models.count;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger viewTag = 99;
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIndentifier forIndexPath:indexPath];
-    id model = self.isInfinite ? self.infiniteModels[indexPath.row] : self.models[indexPath.row];
+    NSInteger realIndex = 0;
+    if (self.models.count) {
+        realIndex = indexPath.row % self.models.count;
+    }
+    id model = self.models[realIndex];
     UIView *view = [cell viewWithTag:viewTag];
     if (!view) {
         if ([self.dataSource respondsToSelector:@selector(contentViewForDzCollectionView:)]) {
@@ -205,7 +199,6 @@ static NSString * const cellIndentifier = @"cellIndentifier";
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return self.spacing;
 }
-
 
 #pragma mark - lazy laod
 

@@ -29,10 +29,10 @@
     return self;
 }
 
-- (void)setModel:(id)model {
+- (void)setModel:(DZAdModel *)model {
     if ([model isKindOfClass:[DZAdModel class]]) {
-        DZAdModel *dzModel = (DZAdModel *)model;
-        _lblTitle.text = dzModel.carName;
+        _model = model;
+        _lblTitle.text = model.carName;
     }
 }
 

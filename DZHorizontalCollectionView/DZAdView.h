@@ -7,6 +7,7 @@
 //
 
 #import "DZHorizontalCollectionViewCell.h"
+#import "DZAdModel.h"
 
 @interface DZAdView : UIView
 

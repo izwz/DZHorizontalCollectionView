@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DZBannerModel.h"
 #import "DZHorizontalCollectionViewCell.h"
 
 @interface DZBannerView : UIView
 
-@property (nonatomic,strong) id model;
+@property (nonatomic,strong) DZBannerModel *model;
 
 @end
