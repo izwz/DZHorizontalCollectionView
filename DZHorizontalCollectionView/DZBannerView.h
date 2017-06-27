@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "DZBannerModel.h"
-#import "DZHorizontalCollectionViewCell.h"
 
 @interface DZBannerView : UIView
 

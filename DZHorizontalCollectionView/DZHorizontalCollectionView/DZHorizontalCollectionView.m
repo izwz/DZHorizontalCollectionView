@@ -7,7 +7,6 @@
 //
 
 #import "DZHorizontalCollectionView.h"
-#import "DZHorizontalCollectionViewCell.h"
 #import "DZHorizontalCollectionViewFlowLayout.h"
 
 static NSString * const cellIndentifier = @"cellIndentifier";
