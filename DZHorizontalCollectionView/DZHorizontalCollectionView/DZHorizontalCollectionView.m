@@ -86,8 +86,10 @@ static NSInteger const repeatCount = 1000;//
     }else{
         targetIndexPath = [NSIndexPath indexPathForRow:currentIndexPath.row - _currentIndex + currentIndex inSection:0];
     }
-    [self.collectionView scrollToItemAtIndexPath:targetIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
-    [self setCurrentIndexAndPageControl:currentIndex];
+    if (self.models.count) {
+        [self.collectionView scrollToItemAtIndexPath:targetIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
+        [self setCurrentIndexAndPageControl:currentIndex];
+    }
 }
 
 - (void)setCurrentIndexAndPageControl:(NSUInteger)currentIndex{
