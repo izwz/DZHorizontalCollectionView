@@ -209,6 +209,7 @@ static NSInteger const repeatCount = 1000;//
         _collectionView.backgroundColor = [UIColor lightGrayColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.alwaysBounceHorizontal = YES;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.showsHorizontalScrollIndicator = NO;
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellIndentifier];
