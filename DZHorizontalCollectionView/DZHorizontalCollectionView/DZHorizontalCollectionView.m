@@ -61,7 +61,9 @@ static NSInteger const repeatCount = 1000;//
     [self.collectionView reloadData];
     [self.pageControl setNumberOfPages:array.count];
     
-    [self setCurrentIndex:0];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self setCurrentIndex:0];
+    });
 }
 
 - (void)registerViewClass:(Class)viewClass refreshMthod:(SEL)method {
@@ -118,6 +120,9 @@ static NSInteger const repeatCount = 1000;//
             currentIndexPath = indexPath;
             break;
         }
+    }
+    if (!currentIndexPath) {
+        currentIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     }
     return currentIndexPath;
 }
