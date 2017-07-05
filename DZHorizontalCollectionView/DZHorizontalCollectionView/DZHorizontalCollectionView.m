@@ -88,7 +88,7 @@ static NSInteger const repeatCount = 1000;//
     }else{
         targetIndexPath = [NSIndexPath indexPathForRow:currentIndexPath.row - _currentIndex + currentIndex inSection:0];
     }
-    if (self.models.count) {
+    if ((self.isInfinite && self.models.count > 1) || (!self.isInfinite && self.models.count)) {
         [self.collectionView scrollToItemAtIndexPath:targetIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
         [self setCurrentIndexAndPageControl:currentIndex];
     }
@@ -146,7 +146,9 @@ static NSInteger const repeatCount = 1000;//
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.isInfinite ? self.models.count * repeatCount : self.models.count;
+    //self.models.count 为 1 时不可无限循环
+    NSInteger count = (self.isInfinite && self.models.count > 1) ? self.models.count * repeatCount : self.models.count;
+    return count;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
