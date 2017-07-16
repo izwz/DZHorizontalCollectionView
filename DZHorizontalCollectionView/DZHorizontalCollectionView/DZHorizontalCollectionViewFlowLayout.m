@@ -41,14 +41,16 @@
         visibleRect.size = self.collectionView.bounds.size;
         
         for (UICollectionViewLayoutAttributes *attribute in array) {
-            CGFloat activeDistance = 30; //激活距离，简单理解就是在这个移动距离内，不会有大小变化，必须超过这个距离才变化
-            CGFloat distance = CGRectGetMidX(visibleRect) - attribute.center.x;
-            if (ABS(distance) > activeDistance ) {
-                CGFloat halfWidth = self.collectionView.bounds.size.width / 2;
-                CGFloat minScale = dzCollectionView.minScale ?: 0.95;
-                CGFloat deltaScale = 1 - minScale;
-                CGFloat targetScale = 1 - deltaScale * ((ABS(distance) - activeDistance) / (halfWidth - activeDistance));
-                attribute.transform = CGAffineTransformMakeScale(targetScale, targetScale);
+            if (CGRectIntersectsRect(attribute.frame, rect)) {
+                CGFloat activeDistance = 30; //激活距离，简单理解就是在这个移动距离内，不会有大小变化，必须超过这个距离才变化
+                CGFloat distance = CGRectGetMidX(visibleRect) - attribute.center.x;
+                if (ABS(distance) > activeDistance ) {
+                    CGFloat halfWidth = self.collectionView.bounds.size.width / 2;
+                    CGFloat minScale = (dzCollectionView.minScale > 0 && dzCollectionView.minScale < 1) ? dzCollectionView.minScale : 0.95;
+                    CGFloat deltaScale = 1 - minScale;
+                    CGFloat targetScale = 1 - deltaScale * ((ABS(distance) - activeDistance) / (halfWidth - activeDistance));
+                    attribute.transform = CGAffineTransformMakeScale(targetScale, targetScale);
+                }
             }
         }
         return array;

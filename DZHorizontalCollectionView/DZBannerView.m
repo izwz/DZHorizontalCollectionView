@@ -26,14 +26,21 @@
     if (self) {
         self.backgroundColor = [UIColor grayColor];
         [self addSubview:self.lblTitle];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
+        [self addGestureRecognizer:tap];
     }
     return self;
 }
 
-- (void)setModel:(id)model {
+- (void)tapped{
+    NSLog(@"%@",self.model.name);
+}
+
+- (void)setModel:(DZBannerModel *)model {
     if ([model isKindOfClass:[DZBannerModel class]]) {
-        DZBannerModel *dzModel = (DZBannerModel *)model;
-        _lblTitle.text = dzModel.name;
+        _model = model;
+        _lblTitle.text = model.name;
     }
 }
 

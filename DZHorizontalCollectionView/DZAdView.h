@@ -6,7 +6,8 @@
 //  Copyright © 2017年 zwz. All rights reserved.
 //
 
-#import "DZHorizontalCollectionViewCell.h"
+#import <UIKit/UIKit.h>
+#import "DZAdModel.h"
 
 @interface DZAdView : UIView
 

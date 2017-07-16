@@ -44,20 +44,20 @@
     _adModels2 = [NSMutableArray array];
     
     
-    for (NSInteger i = 0 ; i < 8; i ++) {
+    for (NSInteger i = 0 ; i < 5; i ++) {
         DZBannerModel *model = [[DZBannerModel alloc] init];
         model.age = i;
         model.name = [NSString stringWithFormat:@"banner_%ld",(long)i];
         [_bannerModels1 addObject:model];
     }
-    for (NSInteger i = 0 ; i < 8; i ++) {
+    for (NSInteger i = 0 ; i < 5; i ++) {
         DZBannerModel *model = [[DZBannerModel alloc] init];
         model.age = i;
         model.name = [NSString stringWithFormat:@"banner_%ld",(long)i];
         [_bannerModels2 addObject:model];
     }
     
-    for (NSInteger i = 0; i < 8; i ++) {
+    for (NSInteger i = 0; i < 5; i ++) {
         DZAdModel *adModel = [[DZAdModel alloc] init];
         adModel.carName = [NSString stringWithFormat:@"ad_%ld",(long)i];
         [_adModels1 addObject:adModel];
@@ -74,12 +74,22 @@
     [self.view addSubview:self.aDView1];
     [self.view addSubview:self.aDView2];
     
+    [self performSelector:@selector(test) withObject:nil afterDelay:3];
+    
 }
 
 #pragma mark - DZHorizontalCollectionViewDelegate
 
 - (void)dzCollectionView:(DZHorizontalCollectionView *)dzCollectionView didSelectItemAtIndex:(NSInteger)index {
-    
+    if (dzCollectionView == _banner1) {
+        
+    }else if (dzCollectionView == _banner2) {
+        
+    }else if (dzCollectionView == _aDView1) {
+        
+    }else if (dzCollectionView == _aDView2) {
+        
+    }
 }
 
 #pragma mark - DZHorizontalCollectionViewDataSource
@@ -107,11 +117,11 @@
         [dzCollectionView registerViewClass:[DZBannerView class] refreshMthod:@selector(setModel:)];
         return view;
     }else if (dzCollectionView == _aDView1) {
-        DZAdView *view = [[DZAdView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 40 * 2, 120)];
+        DZAdView *view = [[DZAdView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 60 * 2, 120)];
         [dzCollectionView registerViewClass:[DZAdView class] refreshMthod:@selector(setModel:)];
         return view;
     }else if (dzCollectionView == _aDView2) {
-        DZAdView *view = [[DZAdView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 140 * 2, 120)];
+        DZAdView *view = [[DZAdView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 26 * 2, 120)];
         [dzCollectionView registerViewClass:[DZAdView class] refreshMthod:@selector(setModel:)];
         return view;
     }
@@ -147,9 +157,9 @@
 - (DZHorizontalCollectionView *)aDView1 {
     if (!_aDView1) {
         _aDView1 = [[DZHorizontalCollectionView alloc] initWithFrame:CGRectMake(0, 350, [UIScreen mainScreen].bounds.size.width, 120)];
-        CGFloat margin = 40;
+        CGFloat margin = 60;
         _aDView1.style = DZHorizontalCollectionViewStyleCoverflow;
-        _aDView1.infinite = YES;
+//        _aDView1.infinite = YES;
         _aDView1.itemWidth = [UIScreen mainScreen].bounds.size.width - margin * 2;
         _aDView1.margin = margin;
         _aDView1.spacing = 0;
@@ -162,17 +172,21 @@
 - (DZHorizontalCollectionView *)aDView2 {
     if (!_aDView2) {
         _aDView2 = [[DZHorizontalCollectionView alloc] initWithFrame:CGRectMake(0, 500, [UIScreen mainScreen].bounds.size.width, 120)];
-        CGFloat margin = 140;
+        CGFloat margin = 26;
         _aDView2.style = DZHorizontalCollectionViewStyleCoverflow;
-        _aDView2.infinite = NO;
+        _aDView2.infinite = YES;
         _aDView2.itemWidth = [UIScreen mainScreen].bounds.size.width - margin * 2;
         _aDView2.margin = margin;
-        _aDView2.spacing = 0;
-        _aDView2.minScale = 0.7;
+        _aDView2.spacing = - 45;
+        _aDView2.minScale = 0.78;
         _aDView2.delegate = self;
         _aDView2.dataSource = self;
     }
     return _aDView2;
+}
+
+- (void)test {
+//    [_banner1 setCurrentIndex:3 animated:YES];
 }
 
 #pragma mark -
