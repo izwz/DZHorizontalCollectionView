@@ -159,7 +159,7 @@ static NSInteger const repeatCount = 1000;//
         realIndex = indexPath.row % self.models.count;
     }
     id model = self.models[realIndex];
-    UIView *view = [cell viewWithTag:viewTag];
+    UIView *view = [cell.contentView viewWithTag:viewTag];
     if (!view) {
         if ([self.dataSource respondsToSelector:@selector(contentViewForDzCollectionView:)]) {
             view = [self.dataSource contentViewForDzCollectionView:self];
