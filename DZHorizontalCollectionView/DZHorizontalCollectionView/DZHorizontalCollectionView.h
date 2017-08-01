@@ -57,4 +57,6 @@ typedef NS_ENUM(NSInteger, DZHorizontalCollectionViewStyle) {
 @optional
 - (void)dzCollectionView:(DZHorizontalCollectionView *)dzCollectionView didSelectItemAtIndex:(NSInteger)index;
 
+- (void)dzCollectionView:(DZHorizontalCollectionView *)dzCollectionView didEndDisplayingView:(UIView *)view forItemAtIndexPath:(NSIndexPath *)indexPath;
+
 @end

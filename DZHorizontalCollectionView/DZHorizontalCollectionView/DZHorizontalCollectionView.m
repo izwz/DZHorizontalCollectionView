@@ -181,6 +181,12 @@ static NSInteger const repeatCount = 1000;//
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    UIView *customView = [cell.contentView viewWithTag:99];
+    if ([self.delegate respondsToSelector:@selector(dzCollectionView:didEndDisplayingView:forItemAtIndexPath:)]) {
+        [self.delegate dzCollectionView:self didEndDisplayingView:customView forItemAtIndexPath:indexPath];
+    }
+}
 
 #pragma mark - UIScrollViewDelegate
 
